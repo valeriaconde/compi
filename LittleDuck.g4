@@ -55,9 +55,8 @@ exit_while: ;
 exit_endwhile: ;
 
 // ESCRITURA
-escritura: PRINT OPENP exit_openp k CLOSEP exit_closep SEMICOLON;
-k: expresion w | STRING w;
-w: | COMMA k;
+escritura: PRINT OPENP exit_openp contenido CLOSEP exit_closep SEMICOLON;
+contenido: expresion | STRING ;
 
 // EXP
 exp: termino exit_termino ((PLUS exit_plus | MINUS exit_minus) termino exit_termino)*;

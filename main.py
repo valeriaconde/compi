@@ -13,6 +13,7 @@ pilaTipos = list()
 # var_table -> nombre: (tipo, valor)
 var_table = {}
 pilaOperadores = list()
+# addresses
 pilaOperandos = list()
 pilaSaltos = list()
 # operador, var1, var2, result
@@ -22,6 +23,7 @@ dirFloat = 2000
 dirCte_int = 3000
 dirCte_float = 3500
 dirBool = 4000
+dirCte_str = 5000
 constantes = {}
 
 ###### CUBO SEMANTICO ######
@@ -30,6 +32,7 @@ class Type(IntEnum):
     INT = 1
     FLOAT = 2
     BOOL = 3
+    STRING = 4
 
 class Operator(IntEnum):
     PLUS = 1
@@ -43,8 +46,9 @@ class Operator(IntEnum):
     EQUAL = 9
     GOTOF = 10
     GOTOV = 11
+    PRINT = 12
 
-cube = np.zeros((5, 5, 12))
+cube = np.zeros((6, 6, 13))
 cube[Type.INT][Type.INT][Operator.PLUS] = Type.INT # int + int = int
 cube[Type.INT][Type.INT][Operator.MINUS] = Type.INT  # int - int = int
 cube[Type.INT][Type.INT][Operator.TIMES] = Type.INT # int * int = int
@@ -281,6 +285,28 @@ class ProgramaListener(LittleDuckListener):
 
         cuadruplos.append((Operator.GOTOV, None, None, anterior))
         self.fill(end, len(cuadruplos))
+
+    def exitContenido(self, ctx):
+        global dirCte_str
+        if ctx.STRING() is not None:
+            cteStr = ctx.getText()
+            if cteStr in constantes:
+                address = constantes[cteStr]
+            else:
+                address = dirCte_str
+                constantes[cteStr] = address
+                dirCte_str = dirCte_str + 1
+            pilaOperandos.append(address)
+            pilaTipos.append(Type.STRING)
+
+    def enterEscritura(self, ctx):
+        pilaOperadores.append(Operator.PRINT)
+
+    def exitEscritura(self, ctx):
+        op = pilaOperadores.pop()
+        res = pilaOperandos.pop()
+        pilaTipos.pop()
+        cuadruplos.append((op, None, None, res))
 
     def exitVar_id(self, ctx: LittleDuckParser.Var_idContext):
         # print(pending_type[-1])

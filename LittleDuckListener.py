@@ -251,21 +251,12 @@ class LittleDuckListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by LittleDuckParser#k.
-    def enterK(self, ctx:LittleDuckParser.KContext):
+    # Enter a parse tree produced by LittleDuckParser#contenido.
+    def enterContenido(self, ctx:LittleDuckParser.ContenidoContext):
         pass
 
-    # Exit a parse tree produced by LittleDuckParser#k.
-    def exitK(self, ctx:LittleDuckParser.KContext):
-        pass
-
-
-    # Enter a parse tree produced by LittleDuckParser#w.
-    def enterW(self, ctx:LittleDuckParser.WContext):
-        pass
-
-    # Exit a parse tree produced by LittleDuckParser#w.
-    def exitW(self, ctx:LittleDuckParser.WContext):
+    # Exit a parse tree produced by LittleDuckParser#contenido.
+    def exitContenido(self, ctx:LittleDuckParser.ContenidoContext):
         pass
 
 
