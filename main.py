@@ -15,6 +15,7 @@ var_table = {}
 pilaOperadores = list()
 pilaOperandos = list()
 pilaSaltos = list()
+# operador, var1, var2, result
 cuadruplos = list()
 dirInts = 1000
 dirFloat = 2000
@@ -40,8 +41,10 @@ class Operator(IntEnum):
     NOT = 7
     PAREN = 8
     EQUAL = 9
+    GOTOF = 10
+    GOTOV = 11
 
-cube = np.zeros((5, 5, 10))
+cube = np.zeros((5, 5, 12))
 cube[Type.INT][Type.INT][Operator.PLUS] = Type.INT # int + int = int
 cube[Type.INT][Type.INT][Operator.MINUS] = Type.INT  # int - int = int
 cube[Type.INT][Type.INT][Operator.TIMES] = Type.INT # int * int = int
@@ -123,6 +126,11 @@ class ProgramaListener(LittleDuckListener):
 
     def exitExit_equals(self, ctx: LittleDuckParser.Exit_equalsContext):
         pilaOperadores.append(Operator.EQUAL)
+
+    def fill(self,  end: int, next: int):
+        c = cuadruplos[end]
+        c = (c[0], c[1], c[2], next)
+        cuadruplos[end] = c
 
     def exitVar_cte(self, ctx: LittleDuckParser.Var_cteContext):
         global dirCte_int
@@ -215,7 +223,7 @@ class ProgramaListener(LittleDuckListener):
 
         for token in varIds:
             if not token.getText() in var_table:
-                raise Exception("Variable no declarada OwO : " + token.getText())
+                raise Exception("Variable no declarada : " + token.getText())
 
         if not len(pilaOperadores) == 0:
             if pilaOperadores[-1] == Operator.EQUAL:
@@ -243,6 +251,37 @@ class ProgramaListener(LittleDuckListener):
     def exitPnvar(self, ctx):
         pilaTipos.pop()
 
+    def exitExit_si(self, ctx):
+        tipoExp = pilaTipos.pop()
+        res = pilaOperandos.pop()
+
+        if tipoExp != Type.BOOL:
+             raise Exception("Condicion no es de tipo BOOL")
+        
+        cuadruplos.append((Operator.GOTOF, res, None, None))
+        pilaSaltos.append(len(cuadruplos)-1)
+
+    def exitExit_condition(self, ctx):
+        end = pilaSaltos.pop()
+        print("end ", end)
+        self.fill(end, len(cuadruplos))
+
+    def exitExit_sino(self, ctx):
+        cuadruplos.append((Operator.GOTOV, None, None, None))
+        f = pilaSaltos.pop()
+        pilaSaltos.append(len(cuadruplos)-1)
+        self.fill(f, len(cuadruplos))
+
+    def exitExit_while(self, ctx):
+        pilaSaltos.append(len(cuadruplos))
+
+    def exitExit_endwhile(self, ctx):
+        end = pilaSaltos.pop()
+        anterior = pilaSaltos.pop()
+
+        cuadruplos.append((Operator.GOTOV, None, None, anterior))
+        self.fill(end, len(cuadruplos))
+
     def exitVar_id(self, ctx: LittleDuckParser.Var_idContext):
         # print(pending_type[-1])
         if ctx.ID() is not None:
@@ -260,7 +299,10 @@ class ProgramaListener(LittleDuckListener):
         
     def exitPrograma(self, ctx):
         print(var_table)
-        print(cuadruplos)
+
+        for cuadruplo in cuadruplos:
+            print(cuadruplo)
+
         print("si funciona :)")
 
 def main(argv):

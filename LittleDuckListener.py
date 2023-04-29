@@ -206,12 +206,39 @@ class LittleDuckListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by LittleDuckParser#exit_condition.
+    def enterExit_condition(self, ctx:LittleDuckParser.Exit_conditionContext):
+        pass
+
+    # Exit a parse tree produced by LittleDuckParser#exit_condition.
+    def exitExit_condition(self, ctx:LittleDuckParser.Exit_conditionContext):
+        pass
+
+
     # Enter a parse tree produced by LittleDuckParser#ciclo.
     def enterCiclo(self, ctx:LittleDuckParser.CicloContext):
         pass
 
     # Exit a parse tree produced by LittleDuckParser#ciclo.
     def exitCiclo(self, ctx:LittleDuckParser.CicloContext):
+        pass
+
+
+    # Enter a parse tree produced by LittleDuckParser#exit_while.
+    def enterExit_while(self, ctx:LittleDuckParser.Exit_whileContext):
+        pass
+
+    # Exit a parse tree produced by LittleDuckParser#exit_while.
+    def exitExit_while(self, ctx:LittleDuckParser.Exit_whileContext):
+        pass
+
+
+    # Enter a parse tree produced by LittleDuckParser#exit_endwhile.
+    def enterExit_endwhile(self, ctx:LittleDuckParser.Exit_endwhileContext):
+        pass
+
+    # Exit a parse tree produced by LittleDuckParser#exit_endwhile.
+    def exitExit_endwhile(self, ctx:LittleDuckParser.Exit_endwhileContext):
         pass
 
 

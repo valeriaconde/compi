@@ -10,7 +10,7 @@ val = val + 1;
 
 si ( 37 <> 89 / 90) [ ] sino [ print("hello world"); ] ;
 
-mientras (7 + 1) [ print(0/1, 7*3.1416, "val"); ];
+mientras (7 < 1) [ print(0/1, 7*3.1416, "val"); ];
 ]
 
 end

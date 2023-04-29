@@ -39,7 +39,7 @@ exit_not: ;
 exit_exp: ;
 
 // CONDICION
-condicion: SI OPENP exit_openp expresion CLOSEP exit_closep exit_si cuerpo m SEMICOLON;
+condicion: SI OPENP exit_openp expresion CLOSEP exit_closep exit_si cuerpo m SEMICOLON exit_condition;
 m: 
     | SINO exit_sino cuerpo;
 
@@ -47,9 +47,12 @@ exit_openp: ;
 exit_closep: ;
 exit_si: ;
 exit_sino: ;
+exit_condition: ;
 
 // CICLO
-ciclo: MIENTRAS OPENP exit_openp expresion CLOSEP exit_closep cuerpo SEMICOLON;
+ciclo: MIENTRAS exit_while OPENP exit_openp expresion CLOSEP exit_closep exit_si cuerpo SEMICOLON exit_endwhile;
+exit_while: ;
+exit_endwhile: ;
 
 // ESCRITURA
 escritura: PRINT OPENP exit_openp k CLOSEP exit_closep SEMICOLON;
