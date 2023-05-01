@@ -1,16 +1,26 @@
 prog valeria;
 
-var int: val, elias;
-float: elda;
+var int: fib, ans, ant, ant2, a, b, c;
 
-[ 
+[
+    a = 2;
+    b = 3;
+    c = 1;
+    ant = 1;
+    ant2 = 0;
+    fib = 6;
+    ans = 0;
 
-val = 7 + 9 ;
-val = val + 1;
+    mientras (fib > 1) [
+        ans = ant + ant2;
+        ant2 = ant;
+        ant = ans;
+        
+        fib = fib - 1;
+    ];
 
-si ( 37 <> 89 / 90) [ ] sino [ print("hello world"); ] ;
+    print(ans);
 
-mientras (7 < 1) [ print("val"); print(1+1); ];
+    print(a+b*c*(a+b))
 ]
-
 end

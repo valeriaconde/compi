@@ -24,7 +24,10 @@ dirCte_int = 3000
 dirCte_float = 3500
 dirBool = 4000
 dirCte_str = 5000
+# value -> address
 constantes = {}
+# address -> actual value
+memoria = {}
 
 ###### CUBO SEMANTICO ######
 class Type(IntEnum):
@@ -329,7 +332,52 @@ class ProgramaListener(LittleDuckListener):
         for cuadruplo in cuadruplos:
             print(cuadruplo)
 
+        print(" ------------------------- ")
+
+        vm()
+
         print("si funciona :)")
+
+#### VIRTUAL MACHINE ####
+def vm():
+    for const in constantes.keys():
+        address = constantes[const]
+        memoria[address] = const
+    
+    it = 0
+    while it < len(cuadruplos):
+        op = cuadruplos[it][0]
+        left = cuadruplos[it][1]
+        right = cuadruplos[it][2]
+        result = cuadruplos[it][3]
+
+        if op == Operator.TIMES:
+            memoria[result] = memoria[left] * memoria[right]
+        elif op == Operator.DIVISION:
+            memoria[result] = memoria[left] / memoria[right]
+        elif op == Operator.PLUS:
+            memoria[result] = memoria[left] + memoria[right]
+        elif op == Operator.MINUS:
+            memoria[result] = memoria[left] - memoria[right]
+        elif op == Operator.LESSTHAN:
+            memoria[result] = memoria[left] < memoria[right]
+        elif op == Operator.MORETHAN:
+            memoria[result] = memoria[left] > memoria[right]
+        elif op == Operator.NOT:
+            memoria[result] = memoria[left] != memoria[right]
+        elif op == Operator.EQUAL:
+            memoria[left] = memoria[right]
+        elif op == Operator.PRINT:
+            print(memoria[result])
+        elif op == Operator.GOTOV:
+            it = result - 1
+        elif op == Operator.GOTOF:
+            if memoria[left] == False:
+                it = result - 1
+
+        it = it + 1
+
+    print(memoria)
 
 def main(argv):
     input_stream = FileStream(argv[1])
