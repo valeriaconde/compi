@@ -13,7 +13,11 @@ En la funcion `vm()` que representa la virtual machine iteramos los cuadruplos q
 Es necesario contar con python3, antlr y java para correr el compilador.
 
 En una línea de comando generamos los archivos necesarios a partir de la gramática con 
-```antlr4 -Dlanguage=Python3 LittleDuck.g4``` 
+
+``` antlr4 -Dlanguage=Python3 LittleDuck.g4 ``` 
+
 y después podemos correr el programa con nuestro propio input con 
-```python main.py testerprogram.txt``` 
+
+``` python main.py testerprogram.txt ``` 
+
 donde testerprogram.txt es el programa en lenguaje LittleDuck a compilar.
