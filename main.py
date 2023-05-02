@@ -10,7 +10,7 @@ from enum import IntEnum
 N = 5000
 INTMIN = -2147483648
 pilaTipos = list()
-# var_table -> nombre: (tipo, valor)
+# var_table -> nombre: (tipo, address)
 var_table = {}
 pilaOperadores = list()
 # addresses
