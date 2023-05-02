@@ -1,15 +1,14 @@
 prog valeria;
 
-var int: fib, ans, ant, ant2, a, b, c;
+var int: fib, ans, ant, ant2, fact, tmp;
 
 [
-    a = 2;
-    b = 3;
-    c = 1;
     ant = 1;
     ant2 = 0;
     fib = 6;
     ans = 0;
+    fact = 5;
+    tmp = 1;
 
     mientras (fib > 1) [
         ans = ant + ant2;
@@ -19,8 +18,16 @@ var int: fib, ans, ant, ant2, a, b, c;
         fib = fib - 1;
     ];
 
+    mientras(fact > 0) [
+        tmp = tmp * fact;
+        fact = fact - 1;
+    ];
+
+    print("Fibonacci");
     print(ans);
 
-    print(a+b*c*(a+b))
+    print("Factorial");
+    print(tmp)
+
 ]
 end
